@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        Create view for following.<br><br>
+
+        a)  View (student_info) for student table(exp no:2) containing studentNo, studentName, department, address<br>
+       
+        b)  View (student_mark) for student table(exp no:2) containing studentNo, studentName, maths, physics, chemistry, cProgramming.<br>
+       
+        c)  Display the studentNo, studentName, totalMarks, address from student_info view and student_mark view without referring student table.<br>
+       
+        d)  Create a view (emp_dept) for exp no:3 containing employee name and department name. (NULL values are expected in the department name field for the employees having invalid department numbers).<br>
+       
+        e)  Find the name of employees having invalid department numbers by referring the emp_dept view.<br><br>
+       
+       
+       <u>ANSWERS<br><br></u>
+       
+       a]create view student_info as select std_no,std_name,dept,address from student;<br>
+       
+       b]create view student_mark as select std_no,std_name,maths,phy,che,cp from student;<br>
+       
+       c]select std_no,std_name,maths+phy+che+cp as total_mark,address from student_info natural join student_mark;<br>
+       
+       d]create view emp_dept as select emp_name,dept_name from emp left join dept on emp.dept_no=dept.dept_no;<br>
+       
+       e]select emp_name from emp_dept where dept_name is null;<br>
+       
+    </body>
+</html>

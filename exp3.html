@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        a. Display the employee name along with their department name (no need to display the employees with invalid department details)<br>
+
+b. There are some invalid department numbers (present in employee table but are not existing in department table), display all employees (along employee name employee id and their department number) who are part of such invalid department numbers .<br>
+
+c. Display all the department numbers available with the department and employee tables avoiding duplicates<br>
+
+d. Display department numbers and name of all the departments where no employee exists.<br>
+
+e. Display department number, employee id and employee name of employees working at location Cochin<br>
+
+f. Display the details of those who draw the salary greater than the average salary of employee’s from sales department<br>
+
+g. The names of employees whose salary is greater than the salary of all the employees in department 1003<br>
+
+h. Give all employees in the 'Sales' department a 20% raise in salary.<br>
+------------------------------------------------------------------------------------------------------------------------<br>
+create table emp(emp_id int, emp_name varchar(30), dept_no int, salary varchar(30), primary key(emp_id));<br>
+insert into emp values(2001,'hari',1006,30000);<br>
+insert into emp values(2002,'devi',1002,40000);<br>
+insert into emp values(2003,'gupta',1003,50000);<br>
+insert into emp values(2004,'ravi',1004,60000);<br>
+insert into emp values(2005,'rani',1007,70000);<br>
+insert into emp values(2006,'john',1003,40000);<br>
+------------------------------------------------------------------------------------------------------------------------<br>
+create table dept(dept_no int, dept_name varchar(30), dept_location varchar(30), primary key(dept_no));<br>
+insert into dept values(1001,'hr','calicut');<br>
+insert into dept values(1002,'marketing','kochi');<br>
+insert into dept values(1003,'sales','trivandrum');<br>
+insert into dept values(1004,'testing','bangalore');<br>
+insert into dept values(1005,'development','bangalore');<br>
+------------------------------------------------------------------------------------------------------------------------<br>
+a] select emp_name,dept_name from emp,dept where dept.dept_no=emp.dept_no;<br>
+b] select emp_name,emp_id,dept_no from emp where dept_no not in (select dept_no from dept);<br>
+c]  select distinct dept.dept_no from emp,dept where dept.dept_no=emp.dept_no;<br>
+d] select * from dept where dept_no not in (select dept_no from emp);<br>
+e] select emp.dept_no,emp_id,emp_name from dept,emp where dept_location='kochi' and dept.dept_no=emp.dept_no;<br>
+f] select * from emp where salary>(select avg(salary) from emp,dept where dept_name='sales');<br>
+g] select emp_name from emp where salary>(select avg(salary) from emp where dept_no=1003);<br>
+h] update emp set salary=salary+0.2*salary where dept_no=(select dept_no from dept where dept_name="sales");<br>
+    </body>
+</html>

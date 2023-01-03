@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        a]Calculate the total  of salary field.<br>
+b]list the account of employees who have salary less than 50000<br>
+c] find the details of employees having maximum salary.<br>
+d] add a new field title to employee table with default value as junior software engineer.<br>
+e] update the title of employee whose employee number 2004 to senior software engineer.<br>
+f] delete the employee record of the employee whose employee number is 2005.<br>
+--------------------------------------------------------------------------------------------<br>
+create table employee(emp_no int, emp_name varchar(30), emp_addr varchar(30), salary int, department varchar(30));<br>
+insert into employee values(2001,'hari','palakkad',30000,'research');<br>
+insert into employee values(2002,'devi','kasargod',40000,'network');<br>
+insert into employee values(2003,'gupta','kannur',50000,'system_admin');<br>
+insert into employee values(2004,'ravi','calicut',60000,'hr');<br>
+insert into employee values(2005,'rani','calicut',70000,'hr');<br>
+------------------------------------------------------------------------------------------<br>
+a]select sum(salary) from employee;<br>
+b]select count(emp_no) from employee where salary< 50000;<br>
+
+c]select max(salary) from employee;<br>
+
+d]alter table employee add title varchar(30) default('junior_software_engineer');<br>
+
+e]update employee set title='senior_software_engineer' where emp_no='2004';<br>
+
+f]delete from employee where emp_no='2005';<br>
+    </body>
+</html>

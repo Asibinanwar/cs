@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        i. Calculate the sales for a financial year 2021-22? <br>
+
+ii. Display publisher wise total price of books published, except for a particular publisher PHI<br>
+
+iii. Write the SQL Query to Find the publisher wise total price of books published<br>
+
+iv. Write the SQL Query to display the name of the customer and title of the books purchased by them.<br>
+
+v.Find the title of books with author name and country published in year 2021;<br>
+
+vi. Get the titles and author name of all books written by authors not living in india.<br>
+
+vii.Write the SQL Query to display the cusomer ids and the total quantity of books purchased by them in the decreasing order of total quantity purcased.<br>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------<br>
+
+create table customer(cust_id int primary key,cust_name varchar(30),cust_phone varchar(30)); <br><br>
+insert into customer values((100,'Hari','12345'),(101,'John','23456'),(102,'Ali','34567');<br><br>
+
+create table book(book_id int primary key,title varchar(30),auth_name varchar(30),unit_price int,pub_name varchar(30),pub_year int,foreign key(auth_name) references author(auth_name),foreign key(pub_name) references publisher(pub_name));<br><br>
+insert into book values((2001,'DS','Samantha',500,'PHI',2020),(2002,'CP','Prasad',300,'TMH'2019),(2003,'DBMS','Navathe',900,'Pearson',2018),(2004,'DC','Forouzan',700,'TMH',2021),(2005,'CN','Tanenbaum',800,'Pearson',2018),(2006,'Python','Brown',800,'TMH',2021);<br><br>
+
+create table sale(sale_id int primary key,cust_id int,foreign key(cust_id),book_id int,foreign key(cust_id)references book(book_id),order_date ,quantity int);<br><br>
+insert into sale values((301,100,2001,'2021-01-02',3),(302,100,2002,'2019-04-02',4),(303,100,2023,'2019-04-02',2),(304,101,2002,'2021-05-02',2),(305,101,2005,'2021-05-02',1),(306,102,2006,'2022-01-02',2);<br><br>
+
+create table author(auth_name varchar(30) primary key,country varchar(30)); <br><br>
+insert into author values(('Brown','US'),('Forouzan','US'),('navathe','india')('Samantha','India'),('Tanenbaum','Us')('vPrasad','india');<br><br>
+
+create table publisher(pub_name varchar(30) primary key,pub_addr varchar(30)); <br><br>
+insert into publisher values(('Pearson','London'),('PHI','Delhi'),('TMH','UP');<br><br>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------<br>
+
+i. select sum(quantity*unit_prioce)as sales from book natural join sales where order_date between '2021-04-01' and '2022-03-31';<br>
+
+ii. select pub_name,sum(unit_price*quantity)from book natural join sales where pub_name not in(select pub_name from book where pub_name='PHI')group by pub_name;<br>
+
+iii. select pub_name,sum(unit_price*quantity)from book natural join sales group by pub_name;<br>
+
+iv. select cust_name,title from book natural join sales natural join customer;<br>
+
+v. select title,auth_name,country from author natural join book where pub_year=2021;<br>
+
+vi. select title,auth_name,country from author natural join book where country!-'india';<br>
+
+vii. select cust_id,sum(quantity)as quantity from sales natural join customer group by cust_id order by quantity desc;<br>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        i. Create trigger for calculating total_price, tax_amount and grand_total in sales table while inserting values.<br>
+
+        The tax rate of vaious category as shown below.<br>
+    
+    book (10%)<br>
+    stationery (20%)<br>
+    chocolate (30%)<br>
+    other (5%)<br>
+    
+    ii. Create a trigger to calculate the stock of an Item after sales of an Item.<br>
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br>
+    create table Item(item_id int primary key,item_desc varchar(30),qty_on_hand int,unit_price int,category varchar(30));<br>
+    create table sale(sale_id int primary key,item_id int,qty_sold int,unit_price int,total_price int,tax_amount int,grand_total int, foreign key(item_id) references Item(item_id));<br>
+    insert into Item values(100,'textbook',20,20,'book'),(101,'milkybar',30,5,'chocolate'),(102,'apple',50,10,'fruit'),(103,'pen',100,8,'stationary');<br>
+    
+    
+    delimiter //<br>
+      create trigger set_data<br>
+         before insert<br>
+         on sale<br>
+         for each row<br>
+         begin<br>
+       
+         
+         declare item_category varchar(30);<br>
+         declare unit_price1 int;<br>
+         
+         select unit_price into unit_price1 from Item where Item.item_id=new.item_id;<br>
+         select category into item_category from Item where Item.item_id=new.item_id;<br>
+         set new.unit_price=unit_price1;<br>
+         set new.total_price=unit_price1*new.qty_sold;<br>
+       
+       if(item_category='chocolate') then<br>
+         set new.tax_amount=(new.total_price*30)/100;<br>
+         elseif (item_category='book') then<br>
+         set new.tax_amount=(new.total_price*10)/100;
+         <br>
+         elseif(item_category='stationery') then<br>
+         set new.tax_amount=(new.total_price*20)/100;<br>
+         else<br>
+         set new.tax_amount=(new.total_price*5)/100;<br>
+         end if;<br>
+         
+         set new.grand_total=new.total_price+new.tax_amount;<br>
+         
+         end<br>
+          //<br>
+    
+         
+    create trigger set_qty before insert on sale for each row begin<br>
+    declare newqty int;<br>
+    declare qty_in_hand int;<br>
+    select qty_on_hand into qty_in_hand from Item where Item.item_id=new.item_id;<br>
+    set newqty=qty_in_hand-new.qty_sold;<br>
+    update Item set qty_on_hand=newqty where Item.item_id=new.item_id;<br>
+    end //<br>
+      delimiter ;<br>
+           
+    insert into sale(sale_id,item_id,qty_sold) values(200,100,10);
+    <br>
+    insert into sale(sale_id,item_id,qty_sold) values(201,101,25);<br>
+    
+    insert into sale(sale_id,item_id,qty_sold) values(202,102,10);<br>
+    
+    insert into sale(sale_id,item_id,qty_sold) values(203,103,20);<br>
+    </body>
+</html>

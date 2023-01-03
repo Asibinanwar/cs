@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        a] List student number and student name who is having marks less than 50 in c programming in ascending order of their marks<br>
+b] List student number,Student name and department in descending order of their name<br>
+c] List the name of student whose name start with S<br>
+d] Find the name of student who obtain second largest mark in c program<br>
+e] List the number of students in each department along with their average marks in maths<br>
+f] List the number of students who have secured marks between 70 and 80 in physics<br>
+----------------------------------------------------------------------------------------------------------------------------------------------<br>
+create table student(std_no int, std_name varchar(30),maths int,physics int, chemistry int, c_programming int, dept varchar(30), address varchar(30), primary key(std_no));<br>
+insert into student values(100,'hari',50,60,45,75,'cse','kasargod');<br>
+insert into student values(101,'devi',60,55,78,40,'cse','kasargod');<br>
+insert into student values(102,'sam',45,77,88,45,'it','kannur');<br>
+insert into student values(103,'sreehari',90,75,77,60,'it','calicut');<br>
+insert into student values(104,'rani',91,98,89,52,'ece','kannur');<br>
+insert into student values(105,'raj',88,77,67,48,'cse','palakkad');<br>
+----------------------------------------------------------------------------------------------------------------------------------------------<br>
+a]select std_no, std_name from student where (c_programming< 50) order by c_programming asc;<br>
+
+b]select std_no, std_name,dept from student order by dept desc,std_name;<br>
+
+c]select std_name from student where std_name like "s%";<br>
+
+d]select max(std_name) from student where c_programming<(select max(c_programming) from student);<br>
+
+e]select dept,count(std_no),avg(maths) from student group by dept;<br>
+
+f]select count(std_no) from student where physics between 70 and 80;<br>
+
+    </body>
+</html>
